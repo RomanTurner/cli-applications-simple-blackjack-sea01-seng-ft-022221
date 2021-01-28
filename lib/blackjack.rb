@@ -50,20 +50,40 @@ def invalid_command
   puts "Please enter a valid command"
 end
 
+def play_again_prompt
+  puts "Do you want to play again? Press 'y' for yes, or 'n' for no."
+end 
+
+def play_again?(yes)
+  play_again_prompt
+  
+  case get_user_input
+  when 'y'
+    yes = true 
+  when 'n'
+    yes = false
+  else
+    invalid_command
+    play_again?(yes)
+end
+
 #####################################################
 # get every test to pass before coding runner below #
 #####################################################
 
 def runner
-  card_total = 0
-  welcome 
-  card_total = initial_round
-  
-  until card_total > 21
-  hit?(card_total)
-  display_card_total(card_total)
-  binding.pry
-end 
-end_game(card_total)
+  yes = true
+  while yes 
+    card_total = 0
+    welcome 
+    card_total = initial_round
+    until card_total > 21
+    card_total = hit?(card_total)
+    display_card_total(card_total)
+    end 
+    end_game(card_total)
+    play_again?(yes)
+  end 
 end
-    
+
+
